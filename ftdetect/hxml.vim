@@ -1,1 +1,1 @@
-autocmd BufRead,BufNewFile *.hxml set filetype=hxml
+autocmd BufRead,BufNewFile *.hxml setfiletype hxml

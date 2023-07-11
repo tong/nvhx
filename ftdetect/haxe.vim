@@ -1,1 +1,1 @@
-autocmd BufRead,BufNewFile *.hx set filetype=haxe
+autocmd BufNewFile,BufRead *.hx,*.hscript setfiletype haxe
