@@ -1,92 +1,122 @@
-if exists("b:current_syntax")
+if !exists("main_syn")
+    if exists("b:current_syn")
+        finish
+    end
+    let main_syn = 'hxml'
+elseif exists("b:current_syn") && b:current_syn == "hxml"
     finish
-end
+endif
 
-let b:current_syntax = "hxml"
+let s:cpo_save = &cpo
+set cpo&vim
 
-syntax match hxmlComment "#.*$" contains=hxmlTodo
+syn match hxmlComment "#.*$" contains=hxmlCommentTodo
+
+syn match haxeType "\<[A-Z][a-zA-Z_0-9]*\>"
+"syn match haxeLibrary "[a-zA-Z][a-zA-Z0-9\_\-]*"
+"syn match hxmlDceAttr contained "\<full\|std\|no\>"
 
 " Target
-syntax match hxmlType "--\?js"
-syntax match hxmlType "--\?lua"
-syntax match hxmlType "--\?swf"
-syntax match hxmlType "--\?neko"
-syntax match hxmlType "--\?php"
-syntax match hxmlType "--\?cpp"
-syntax match hxmlType "--\?cppia"
-syntax match hxmlType "--\?cs"
-syntax match hxmlType "--\?java"
-syntax match hxmlType "--\?jvm"
-syntax match hxmlType "--\?python"
-syntax match hxmlType "--\?hl"
-syntax match hxmlType "--\?interp"
-syntax match hxmlType "--\?run"
+syn match hxmlType "--\?js"
+syn match hxmlType "--\?lua"
+syn match hxmlType "--\?swf"
+syn match hxmlType "--\?neko"
+syn match hxmlType "--\?php"
+syn match hxmlType "--\?cpp"
+syn match hxmlType "--\?cppia"
+syn match hxmlType "--\?cs"
+syn match hxmlType "--\?java"
+syn match hxmlType "--\?jvm"
+syn match hxmlType "--\?python"
+syn match hxmlType "--\?hl"
+syn match hxmlType "--\?interp"
+syn match hxmlType "--\?run"
 
 " Compilation
-syntax match hxmlType "-p"
-syntax match hxmlType "--class-path"
-syntax match hxmlType "-m"
-syntax match hxmlType "--\?main"
-syntax match hxmlType "-L"
-syntax match hxmlType "--library"
-syntax match hxmlType "-D"
-syntax match hxmlType "--define"
-syntax match hxmlType "-r"
-syntax match hxmlType "-resource"
-syntax match hxmlType "--\?cmd"
-syntax match hxmlType "--\?remap"
-syntax match hxmlType "--\?macro"
-syntax match hxmlType "-C"
-syntax match hxmlType "---cwd"
-syntax match hxmlType "--\?haxelib-global"
+syn match hxmlType "-p"
+syn match hxmlType "--class-path"
+syn match hxmlType "-m"
+syn match hxmlType "--\?main"
+syn match hxmlType "-L"
+"syn match hxmlType "--library\s[a-zA-Z][a-zA-Z0-9\_\-]*"
+"syn match hxmlType "--library\s[a-zA-Z][a-zA-Z0-9_\-\.]*"
+"syn match hxmlType start=+--library\s+ end=+[a-zA-Z][a-zA-Z0-9_\-\.]*
+"syn match hxmlType "-\-library\s+" nextgroup=haxeLibrary
+"syn match hxmlType "-\-library\s\s*[a-zA-Z][a-zA-Z0-9_\-\.]*"
+"syn match hxmlType /--library\s*/ nextgroup=haxeLibrary
+"syn match hxmlType "--library\s" nextgroup=haxeLibrary
+"syn match hxmlType "--FFF\s\s*[a-zA-Z][a-zA-Z0-9\_\-]*"
+"syn match hxmlType /--FFF\s\s*/
+
+"syn match hxmlType "-D"
+syn match hxmlType "-D\s[a-zA-Z_][a-zA-Z_\=\[\]]*"
+syn match hxmlType "--define"
+syn match hxmlType "-r"
+syn match hxmlType "-resource"
+syn match hxmlType "--\?cmd"
+syn match hxmlType "--\?remap"
+syn match hxmlType "--\?macro"
+syn match hxmlType "-C"
+syn match hxmlType "---cwd"
+syn match hxmlType "--\?haxelib-global"
+syn match hxmlType "-w"
 
 " Optimization
-syntax match hxmlType "--\?dce"
-syntax match hxmlType "--\?no-traces"
-syntax match hxmlType "--\?no-output"
-syntax match hxmlType "--\?no-inline"
-syntax match hxmlType "--\?no-opt"
+syn match hxmlType "--\?dce\s\s*\(full\|std\|none\)"
+syn match hxmlType "--\?no-traces"
+syn match hxmlType "--\?no-output"
+syn match hxmlType "--\?no-inline"
+syn match hxmlType "--\?no-opt"
 
 " Debug
-syntax match hxmlType "-v"
-syntax match hxmlType "--verbose"
-syntax match hxmlType "--\?debug"
-syntax match hxmlType "--prompt"
-syntax match hxmlType "--times"
+syn match hxmlType "-v"
+syn match hxmlType "--verbose"
+syn match hxmlType "--\?debug"
+syn match hxmlType "--prompt"
+syn match hxmlType "--times"
 
 " Batch
-syntax match hxmlType "--next" 
-syntax match hxmlType "--each"
+syn match hxmlType "--next" 
+syn match hxmlType "--each"
 
 " Services
-syntax match hxmlType "--display"
-syntax match hxmlType "--xml"
-syntax match hxmlType "--json"
+syn match hxmlType "--display"
+syn match hxmlType "--xml"
+syn match hxmlType "--json"
 
 " Compilation Server
-syntax match hxmlType "--server-listen"
-syntax match hxmlType "--server-connect"
-syntax match hxmlType "--connect"
+syn match hxmlType "--server-listen"
+syn match hxmlType "--server-connect"
+syn match hxmlType "--connect"
 
 " Target-specific
-syntax match hxmlType "--swf-version"
-syntax match hxmlType "--swf-header"
-syntax match hxmlType "--flash-strict"
-syntax match hxmlType "--swf-lib"
-syntax match hxmlType "--swf-lib-extern"
-syntax match hxmlType "--java-lib"
-syntax match hxmlType "--java-lib-extern"
-syntax match hxmlType "--net-std"
-syntax match hxmlType "--c-arg"
+syn match hxmlType "--swf-version"
+syn match hxmlType "--swf-header"
+syn match hxmlType "--flash-strict"
+syn match hxmlType "--swf-lib"
+syn match hxmlType "--swf-lib-extern"
+syn match hxmlType "--java-lib"
+syn match hxmlType "--java-lib-extern"
+syn match hxmlType "--net-std"
+syn match hxmlType "--c-arg"
 
 " Miscellaneous
-syntax match hxmlType "--version"
-syntax match hxmlType "-h"
-syntax match hxmlType "--help"
-syntax match hxmlType "--help-defines"
-syntax match hxmlType "--help-metas"
+syn match hxmlType "--version"
+syn match hxmlType "-h"
+syn match hxmlType "--help"
+syn match hxmlType "--help-defines"
+syn match hxmlType "--help-user-defines"
+syn match hxmlType "--help-metas"
+syn match hxmlType "--help-user-metas"
 
-highlight link hxmlType Type
-highlight link hxmlStatement Statement
-highlight link hxmlComment Comment
+hi def link hxmlComment Comment
+hi def link hxmlType Type
 
+let b:current_syn = "hxml"
+if main_syn == 'javascript'
+    unlet main_syn
+endif
+let &cpo = s:cpo_save
+unlet s:cpo_save
+
+" vim: ts=8
