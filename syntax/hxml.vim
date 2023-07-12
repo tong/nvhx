@@ -1,5 +1,5 @@
 if !exists("main_syn")
-    if exists("b:current_syn")
+    if exists("b:current_syntax")
         finish
     end
     let main_syn = 'hxml'
@@ -10,11 +10,11 @@ endif
 let s:cpo_save = &cpo
 set cpo&vim
 
-syn match hxmlComment "#.*$" contains=hxmlCommentTodo
+syn keyword hxmlTodo TODO FIXME XXX NOTE contained
+
+syn match hxmlComment "#.*$" contains=hxmlTodo
 
 syn match haxeType "\<[A-Z][a-zA-Z_0-9]*\>"
-"syn match haxeLibrary "[a-zA-Z][a-zA-Z0-9\_\-]*"
-"syn match hxmlDceAttr contained "\<full\|std\|no\>"
 
 " Target
 syn match hxmlType "--\?js"
@@ -38,17 +38,7 @@ syn match hxmlType "--class-path"
 syn match hxmlType "-m"
 syn match hxmlType "--\?main"
 syn match hxmlType "-L"
-"syn match hxmlType "--library\s[a-zA-Z][a-zA-Z0-9\_\-]*"
-"syn match hxmlType "--library\s[a-zA-Z][a-zA-Z0-9_\-\.]*"
-"syn match hxmlType start=+--library\s+ end=+[a-zA-Z][a-zA-Z0-9_\-\.]*
-"syn match hxmlType "-\-library\s+" nextgroup=haxeLibrary
-"syn match hxmlType "-\-library\s\s*[a-zA-Z][a-zA-Z0-9_\-\.]*"
-"syn match hxmlType /--library\s*/ nextgroup=haxeLibrary
-"syn match hxmlType "--library\s" nextgroup=haxeLibrary
-"syn match hxmlType "--FFF\s\s*[a-zA-Z][a-zA-Z0-9\_\-]*"
-"syn match hxmlType /--FFF\s\s*/
 
-"syn match hxmlType "-D"
 syn match hxmlType "-D\s[a-zA-Z_][a-zA-Z_\=\[\]]*"
 syn match hxmlType "--define"
 syn match hxmlType "-r"
@@ -109,14 +99,14 @@ syn match hxmlType "--help-user-defines"
 syn match hxmlType "--help-metas"
 syn match hxmlType "--help-user-metas"
 
+" Old/Compat
+syn match hxmlType "-cp"
+syn match hxmlType "-x"
+
 hi def link hxmlComment Comment
 hi def link hxmlType Type
+hi def link hxmlTarget Identifier
 
 let b:current_syn = "hxml"
-if main_syn == 'javascript'
-    unlet main_syn
-endif
 let &cpo = s:cpo_save
 unlet s:cpo_save
-
-" vim: ts=8

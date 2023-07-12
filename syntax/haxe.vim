@@ -254,7 +254,8 @@ syn match haxeCompilerMeta "@:\(
     \\)\>"
 
 
-syn sync ccomment haxeComment2 minlines=10
+syn sync ccomment haxeComment2 minlines=1
+"syn sync ccomment haxeComment2
 
 HaxeHiLink haxeMeta Macro
 HaxeHiLink haxeCompilerMeta Identifier
